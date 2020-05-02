@@ -16,6 +16,8 @@ import com.caronte.diarios.Diarios;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
+import com.caronte.room.DiarioBridge;
+import com.caronte.room.IntDiarioBridge;
 import com.caronte.room.IntPeriodoBridge;
 import com.caronte.room.PeriodoBridge;
 
@@ -24,7 +26,7 @@ import com.caronte.room.PeriodoBridge;
  * es decir sus hermanos.
  * @author Gonza
  * */
-public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPeriodoBridge {
+public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPeriodoBridge, IntDiarioBridge {
 
     private Context context;
     private AppDatabase db;
@@ -33,7 +35,8 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPe
     private Button btnNewDetalleDiario;
     private Periodo periodo;
     private Diario diario;
-    private PeriodoBridge bridge;
+    private PeriodoBridge periodoBridge;
+    private DiarioBridge diarioBridge;
 
     /******************************** Implementación de actividad ********************************/
     @Override
@@ -58,11 +61,15 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPe
      * sea persistido.
      */
     private void findPeriodo() {
-        bridge = new PeriodoBridge(this, this, db, new Periodo());
+        periodoBridge = new PeriodoBridge(this, this, db, new Periodo());
     }
 
+    /**
+     * Consulta a la base de datos por el diario actual, y en caso de ser devuelto nulo, crea el
+     * nuevo diario y lo persiste.
+     * */
     private void findDiario() {
-        diario = Diarios.getDiario(db);
+        diarioBridge = new DiarioBridge(this, this, db, new Diario());
     }
 
     /*********************************** Inicialización de XML ***********************************/
@@ -106,4 +113,12 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPe
         this.periodo = periodo;
     }
 
+    public Diario getDiario() {
+        return diario;
+    }
+
+    @Override
+    public void setDiario(Diario driario) {
+
+    }
 }
