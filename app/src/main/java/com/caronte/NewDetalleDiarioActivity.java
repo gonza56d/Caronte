@@ -16,15 +16,15 @@ import com.caronte.diarios.Diarios;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
-
-import java.lang.ref.WeakReference;
+import com.caronte.room.IntPeriodoBridge;
+import com.caronte.room.PeriodoBridge;
 
 /**
  * Actividad que contiene la creación de un nuevo detalle diario, más la lista de detalles del día,
  * es decir sus hermanos.
  * @author Gonza
  * */
-public class NewDetalleDiarioActivity extends AppCompatActivity {
+public class NewDetalleDiarioActivity extends AppCompatActivity implements IntPeriodoBridge {
 
     private Context context;
     private AppDatabase db;
@@ -33,6 +33,7 @@ public class NewDetalleDiarioActivity extends AppCompatActivity {
     private Button btnNewDetalleDiario;
     private Periodo periodo;
     private Diario diario;
+    private PeriodoBridge bridge;
 
     /******************************** Implementación de actividad ********************************/
     @Override
@@ -57,11 +58,7 @@ public class NewDetalleDiarioActivity extends AppCompatActivity {
      * sea persistido.
      */
     private void findPeriodo() {
-        periodo = Diarios.getPeriodo(db);
-        if (periodo == null) {
-            Intent intent = new Intent(NewDetalleDiarioActivity.this, NewPeriodoActivity.class);
-            startActivity(intent);
-        }
+        bridge = new PeriodoBridge(this, this, db, new Periodo());
     }
 
     private void findDiario() {
@@ -99,16 +96,14 @@ public class NewDetalleDiarioActivity extends AppCompatActivity {
         Diarios.insertDetalleDiario(db, descripcion, gasto);
     }
 
-    /********************************* Clase anidada para consutlas ******************************/
-    private static class PeriodoAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private WeakReference<Activity> weakActivity;
-        public PeriodoAsyncTask(Activity activity, String email, String phone, String license) {
+    /************************************* Getters & Setters *************************************/
+    public Periodo getPeriodo() {
+        return periodo;
+    }
 
-        }
-        @Override
-        protected Integer doInBackground(Void... voids) {
-            return null;
-        }
+    @Override
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
 
 }
