@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Pantalla -->
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewDetalleDiarioActivity">
+
+    <!-- Titulo de la app -->
+    <TextView
+        android:id="@+id/lbl_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="36sp"/>
+
+    <!-- Header / Añadir nuevo DetalleDiario -->
+    <TableLayout
+        android:id="@+id/table_new_detalle_diario"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16sp">
+        <TextView
+            android:id="@+id/lbl_detalle_diario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:layout_marginStart="44sp"
+            android:text="@string/new_detalle_diario"
+            android:textSize="28sp"/>
+        <EditText
+            android:id="@+id/txt_detalle_diario_descripcion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="44sp"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:autofillHints="false"
+            android:hint="@string/new_detalle_diario_descripcion"/>
+        <EditText
+            android:id="@+id/txt_detalle_diario_gasto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="44sp"
+            android:digits="0123456789"
+            android:inputType="phone"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:autofillHints="false"
+            android:hint="@string/new_detalle_diario_gasto"/>
+        <Button
+            android:id="@+id/btn_new_detalle_diario"
+            android:layout_width="0dp"
+            android:text="@string/new_detalle_diario_aceptar"
+            android:layout_marginHorizontal="44sp"
+            android:textAlignment="center"
+            android:textSize="22sp" />
+    </TableLayout>
+
+</TableLayout>

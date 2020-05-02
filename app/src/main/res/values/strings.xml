@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Caronte</string>
+    <!-- new_detalle_diario_activity -->
+    <string name="new_detalle_diario">Nuevo Gasto:</string>
+    <string name="new_detalle_diario_descripcion">Descripción:</string>
+    <string name="new_detalle_diario_gasto">Monto:</string>
+    <string name="new_detalle_diario_aceptar">Agregar</string>
+    <!-- new_periodo_activity -->
+    <string name="new_periodo_aviso">No encontramos un período activo!</string>
+    <string name="new_periodo">Nuevo Período:</string>
+    <string name="new_periodo_hasta">Finaliza el:</string>
+    <string name="new_periodo_balance_inicial">Balance inicial:</string>
+    <string name="new_periodo_aceptar">Comenzar</string>
+</resources>
