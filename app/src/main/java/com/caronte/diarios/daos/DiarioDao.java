@@ -15,4 +15,7 @@ public interface DiarioDao {
 
     @Query("SELECT * FROM diario where diarioId = :hoy")
     Diario getDiario(Date hoy);
+
+    @Query("DELETE FROM diario")
+    void deleteAll();
 }

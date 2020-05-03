@@ -16,4 +16,7 @@ public interface PeriodoDao {
     @Query("SELECT * FROM periodo WHERE desde <= :hoy AND hasta >= :hoy")
     Periodo getPeriodo(Date hoy);
 
+    @Query("DELETE FROM periodo")
+    void deleteAll();
+
 }

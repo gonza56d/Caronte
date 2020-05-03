@@ -19,4 +19,14 @@ public class BusDiario implements IntDiario {
         });
         return diario[0];
     }
+
+    @Override
+    public void deleteAll(final AppDatabase db) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.diarioDao().deleteAll();
+            }
+        });
+    }
 }

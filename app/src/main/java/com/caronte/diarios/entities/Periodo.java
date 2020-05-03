@@ -23,8 +23,6 @@ public class Periodo {
     private Date hasta;
     @ColumnInfo(name = "balanceInicial")
     private Long balanceInicial;
-    @Ignore
-    private Long disponibleDiario;
 
     public Periodo() {}
 
@@ -96,14 +94,10 @@ public class Periodo {
      * por la cantidad de días que dura el período.
      * */
     public Long getDisponibleDiario() {
-        return disponibleDiario;
+        long dias = hasta.getTime() - desde.getTime();
+        dias = dias / (1000*60*60*24);
+        if (dias == 0) { return null; }
+        return balanceInicial / dias;
     }
 
-    /**
-     * Setea la plata que el período dispone a diario.
-     * Originalmente obtenida de (balanceInicial / cantidad de días que dura el período).
-     * */
-    public void setDisponibleDiario(Long disponibleDiario) {
-        this.disponibleDiario = disponibleDiario;
-    }
 }

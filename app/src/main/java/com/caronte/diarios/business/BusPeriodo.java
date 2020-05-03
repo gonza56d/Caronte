@@ -47,6 +47,16 @@ public class BusPeriodo implements IntPeriodo {
         return periodo[0];
     }
 
+    @Override
+    public void deleteAll(final AppDatabase db) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.periodoDao().deleteAll();
+            }
+        });
+    }
+
     /**
      * Valida que la fecha ingresada para el nuevo período no sea anterior ni igual a la fecha actual.
      * */
@@ -82,7 +92,6 @@ public class BusPeriodo implements IntPeriodo {
             periodo.setDesde(formato.parse(hoy));
             periodo.setHasta(formato.parse(hasta));
             periodo.setBalanceInicial(balanceInicial);
-            periodo.setDisponibleDiario(balanceInicial / dias);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -10,4 +10,6 @@ public interface IntPeriodo {
 
     Periodo getPeriodo(AppDatabase db);
 
+    void deleteAll(AppDatabase db);
+
 }

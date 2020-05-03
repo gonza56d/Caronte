@@ -7,4 +7,6 @@ public interface IntDiario {
 
     Diario getDiario(AppDatabase db);
 
+    void deleteAll(AppDatabase db);
+
 }

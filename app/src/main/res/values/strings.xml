@@ -11,4 +11,8 @@
     <string name="new_periodo_hasta">Finaliza el:</string>
     <string name="new_periodo_balance_inicial">Balance inicial:</string>
     <string name="new_periodo_aceptar">Comenzar</string>
+    <!-- tabla de detalles de gastos -->
+    <string name="hora">Hora</string>
+    <string name="descripcion">Descripción</string>
+    <string name="gasto">Gasto</string>
 </resources>

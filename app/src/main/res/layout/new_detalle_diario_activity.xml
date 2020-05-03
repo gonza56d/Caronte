@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
-            android:layout_marginStart="44sp"
+            android:layout_marginHorizontal="44sp"
             android:text="@string/new_detalle_diario"
             android:textSize="28sp"/>
         <EditText
@@ -60,6 +60,27 @@
             android:layout_marginHorizontal="44sp"
             android:textAlignment="center"
             android:textSize="22sp" />
+    </TableLayout>
+
+    <!-- Tabla con todos los detalles de gastos del día -->
+    <TableLayout
+        android:id="@+id/table_list_detalles_diarios"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16sp"
+        android:layout_marginHorizontal="44sp"
+        android:stretchColumns="*">
+        <TableRow>
+            <TextView
+                android:textAlignment="center"
+                android:text="@string/hora"/>
+            <TextView
+                android:textAlignment="center"
+                android:text="@string/descripcion"/>
+            <TextView
+                android:textAlignment="center"
+                android:text="@string/gasto"/>
+        </TableRow>
     </TableLayout>
 
 </TableLayout>

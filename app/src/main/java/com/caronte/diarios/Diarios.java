@@ -1,6 +1,7 @@
 package com.caronte.diarios;
 
 import com.caronte.diarios.business.Factory;
+import com.caronte.diarios.entities.DetalleDiario;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.exceptions.BusinessException;
@@ -25,10 +26,10 @@ public class Diarios {
 
     /**
      * Intenta persistir un nuevo detalle diario a la base de datos para el corriente diario,
-     * el cual en caso de no existir es persistido en conjunto al detalle.
+     * si la persistencia ocurre, devuelve el objeto.
      * */
-    public static void insertDetalleDiario(AppDatabase db, String descripcion, String gasto) {
-        Factory.getIntDetalleDiario().insertDetalleDiario(db, descripcion, gasto);
+    public static DetalleDiario insertDetalleDiario(AppDatabase db, String descripcion, String gasto) {
+        return Factory.getIntDetalleDiario().insertDetalleDiario(db, descripcion, gasto);
     }
 
     /**
@@ -37,6 +38,15 @@ public class Diarios {
      * */
     public static Diario getDiario(AppDatabase db) {
         return Factory.getIntDiario().getDiario(db);
+    }
+
+    /**
+     * Borra todos de todos, usable para desarrollo.
+     * */
+    public static void deleteEverything(AppDatabase db) {
+        Factory.getIntDetalleDiario().deleteAll(db);
+        Factory.getIntDiario().deleteAll(db);
+        Factory.getIntPeriodo().deleteAll(db);
     }
 
 }
