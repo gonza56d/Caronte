@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,8 +15,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.caronte.diarios.Diarios;
-import com.caronte.exceptions.BusinessException;
+import com.caronte.diarios.business.newperiodo.CreatePeriodo;
+import com.caronte.diarios.business.newperiodo.IntBusNewPeriodo;
 import com.caronte.room.AppDatabase;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +26,7 @@ import java.util.Calendar;
  * Actividad que contiene la creación de un nuevo período.
  * @author Gonza
  * */
-public class NewPeriodoActivity extends AppCompatActivity {
+public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPeriodo {
 
     private Context context;
     private AppDatabase db;
@@ -121,15 +120,17 @@ public class NewPeriodoActivity extends AppCompatActivity {
         String hasta = txtPeriodoHasta.getText().toString();
         String balanceInicial = txtPeriodoBalanceInicial.getText().toString();
         try {
-            Diarios.insertPeriodo(db, hasta, balanceInicial);
-            Intent intent = new Intent(NewPeriodoActivity.this, NewDetalleDiarioActivity.class);
-            startActivity(intent);
+            new CreatePeriodo(this, this, db, hasta, balanceInicial);
         } catch (Exception e) {
-            lblExceptions.setText(e.getMessage());
-            lblExceptions.setVisibility(View.VISIBLE);
-            clearFields();
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void createPeriodoException(String exceptionMessage) {
+        lblExceptions.setText(exceptionMessage);
+        lblExceptions.setVisibility(View.VISIBLE);
+        clearFields();
     }
 
 }

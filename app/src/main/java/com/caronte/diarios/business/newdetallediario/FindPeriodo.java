@@ -1,36 +1,37 @@
-package com.caronte.room;
+package com.caronte.diarios.business.newdetallediario;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.caronte.NewPeriodoActivity;
-import com.caronte.diarios.Diarios;
 import com.caronte.diarios.entities.Periodo;
+import com.caronte.room.AppDatabase;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 
-/**
- * Clase que se utiliza para realizar consultas asíncronas a la base de datos con períodos.
- * */
-public class PeriodoBridge extends AsyncTask<Void, Void, Periodo> implements IntPeriodoBridge {
+public class FindPeriodo extends AsyncTask<Void, Void, Periodo> {
 
     private WeakReference<Activity> weakActivity;
-    private IntPeriodoBridge llamador;
+    private IntBusNewDetalleDiario llamador;
     private AppDatabase db;
-    private Periodo periodo;
 
-    public PeriodoBridge(Activity activity, IntPeriodoBridge llamador, AppDatabase db, Periodo periodo) {
+    /**
+     * Búsqueda asíncrona de período. En caso de existir, lo setea a la vista (setPeriodo()) y
+     * llama al método de la misma a buscar el diario (findDiario()). En caso contrario, interrumpe
+     * la actividad e inicia NewPeriodoActivity.
+     * */
+    public FindPeriodo(Activity activity, IntBusNewDetalleDiario llamador, AppDatabase db) {
         weakActivity = new WeakReference<>(activity);
         this.llamador = llamador;
         this.db = db;
-        this.periodo = periodo;
+        executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     protected Periodo doInBackground(Void... voids) {
-        periodo = Diarios.getPeriodo(db);
-        return periodo;
+        return db.periodoDao().getPeriodo(new Date());
     }
 
     @Override
@@ -43,12 +44,8 @@ public class PeriodoBridge extends AsyncTask<Void, Void, Periodo> implements Int
             Intent intent = new Intent(activity, NewPeriodoActivity.class);
             activity.startActivity(intent);
         } else {
-            setPeriodo(periodo);
+            llamador.setPeriodo(periodo);
+            llamador.findDiario();
         }
-    }
-
-    @Override
-    public void setPeriodo(Periodo periodo) {
-        llamador.setPeriodo(periodo);
     }
 }
