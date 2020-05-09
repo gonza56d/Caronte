@@ -14,6 +14,9 @@ public interface DiarioDao {
     @Insert
     void insertAll(Diario... diarios);
 
+    @Update
+    void update(Diario diario);
+
     @Query("SELECT * FROM diario where diarioId = :hoy")
     Diario getDiario(Date hoy);
 

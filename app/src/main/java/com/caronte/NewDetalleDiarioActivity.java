@@ -1,10 +1,10 @@
 package com.caronte;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -26,6 +26,8 @@ import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Actividad que contiene la creación de un nuevo detalle diario, más la lista de detalles del día,
@@ -157,8 +159,10 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         lblExceptions.setText(null);
         String descripcion = txtDetalleDiarioDescripcion.getText().toString();
         String gasto = txtDetalleDiarioGasto.getText().toString();
+        Utils.hideSoftKeyboard(this);
         new CreateDetalleDiario(this, this, db, periodo, diario, descripcion, gasto);
     }
+
 
     @Override
     public void raiseException(String mensaje) {
@@ -223,10 +227,19 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
     }
 
     @Override
-    public void setDiario(Diario diario) {
+    public void setDiario(final Diario diario) {
         this.diario = diario;
-        if (diarioAyer != null)
-        this.diario.setBalance(diario.getBalance()+diarioAyer.getBalance());
+        if (diarioAyer != null && !diario.isSaldoFijado()) {
+            this.diario.setBalance(diario.getBalance() + diarioAyer.getBalance());
+        }
+        this.diario.setSaldoFijado(true);
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.diarioDao().update(diario);
+            }
+        });
         updateTablaDiario();
         findDetallesDiarios();
     }

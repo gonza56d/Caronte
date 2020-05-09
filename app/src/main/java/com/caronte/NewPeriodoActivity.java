@@ -120,6 +120,7 @@ public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPe
         lblExceptions.setText(null);
         String hasta = txtPeriodoHasta.getText().toString();
         String balanceInicial = txtPeriodoBalanceInicial.getText().toString();
+        Utils.hideSoftKeyboard(this);
         try {
             new CreatePeriodo(this, this, db, hasta, balanceInicial);
         } catch (Exception e) {

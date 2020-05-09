@@ -25,6 +25,8 @@ public class Diario {
     private long sobra;
     @ColumnInfo(name = "balance")
     private long balance;
+    @ColumnInfo(name = "saldoFijado")
+    private boolean saldoFijado;
     @Ignore
     private List<DetalleDiario> detalles;
 
@@ -118,5 +120,13 @@ public class Diario {
      * */
     public void setDetalles(List<DetalleDiario> detalles) {
         this.detalles = detalles;
+    }
+
+    public boolean isSaldoFijado() {
+        return saldoFijado;
+    }
+
+    public void setSaldoFijado(boolean saldoFijado) {
+        this.saldoFijado = saldoFijado;
     }
 }
