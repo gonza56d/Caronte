@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#000000</color>
+    <color name="ultragray">#323232</color>
+    <color name="softgray">#CDCDCD</color>
     <color name="colorPrimary">#32A800</color>
     <color name="colorPrimaryDark">#046C00</color>
     <color name="colorAccent">#38FF00</color>

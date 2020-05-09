@@ -1,6 +1,7 @@
 package com.caronte;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -184,8 +185,11 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
 
     public void updateTablaDiario() {
         lblDiarioGasto.setText("$ " + String.valueOf(diario.getGasto()));
+        lblDiarioBalance.setTextColor(getResources().getColor(R.color.softgray));
         lblDiarioSobra.setText("$ " + String.valueOf(diario.getSobra()));
+        lblDiarioSobra.setTextColor(getResources().getColor(R.color.softgray));
         lblDiarioBalance.setText("$ " + String.valueOf(diario.getBalance()));
+        lblDiarioBalance.setTextColor(getResources().getColor(R.color.softgray));
     }
 
     public void updateTablaDetalles() {
@@ -193,8 +197,11 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         for (DetalleDiario detalleDiario : diario.getDetalles()) {
             TableRow row = new TableRow(this);
             TextView txtHora = new TextView(this);
+            txtHora.setTextColor(getResources().getColor(R.color.softgray));
             TextView txtDescripcion = new TextView(this);
+            txtDescripcion.setTextColor(getResources().getColor(R.color.softgray));
             TextView txtGasto = new TextView(this);
+            txtGasto.setTextColor(getResources().getColor(R.color.softgray));
             txtGasto.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
             txtGasto.setText("$ " + String.valueOf(detalleDiario.getGasto()));
             txtGasto.setTextSize(18);

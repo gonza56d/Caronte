@@ -7,7 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewDetalleDiarioActivity">
+    tools:context=".NewDetalleDiarioActivity"
+    android:background="@color/ultragray">
 
     <!-- Titulo de la app -->
     <!--
@@ -32,7 +33,8 @@
             android:layout_marginTop="16sp"
             android:layout_marginHorizontal="44sp"
             android:text="@string/new_detalle_diario"
-            android:textSize="28sp"/>
+            android:textSize="28sp"
+            android:textColor="@color/colorPrimary"/>
         <EditText
             android:id="@+id/txt_detalle_diario_descripcion"
             android:layout_width="0dp"
@@ -42,7 +44,9 @@
             android:textAlignment="center"
             android:textSize="22sp"
             android:autofillHints="false"
-            android:hint="@string/new_detalle_diario_descripcion"/>
+            android:hint="@string/new_detalle_diario_descripcion"
+            android:textColor="@color/softgray"
+            android:textColorHint="@color/softgray"/>
         <EditText
             android:id="@+id/txt_detalle_diario_gasto"
             android:layout_width="0dp"
@@ -53,7 +57,9 @@
             android:textAlignment="center"
             android:textSize="22sp"
             android:autofillHints="false"
-            android:hint="@string/new_detalle_diario_gasto"/>
+            android:hint="@string/new_detalle_diario_gasto"
+            android:textColor="@color/softgray"
+            android:textColorHint="@color/softgray"/>
         <TextView
             android:id="@+id/lbl_exception"
             android:layout_width="wrap_content"
@@ -71,7 +77,8 @@
             android:textAlignment="center"
             android:textSize="22sp"
             android:textColor="@color/colorPrimary"
-            android:shadowColor="@color/black" />
+            android:shadowColor="@color/colorPrimaryDark"
+            android:background="@color/black"/>
     </TableLayout>
 
     <!-- Tabla con info del diario -->
@@ -82,7 +89,8 @@
         android:layout_marginTop="16sp"
         android:layout_marginHorizontal="44sp"
         android:text="@string/diario"
-        android:textSize="28sp"/>
+        android:textSize="28sp"
+        android:textColor="@color/colorPrimary"/>
     <TableLayout
         android:id="@+id/table_diario"
         android:layout_width="wrap_content"
@@ -93,29 +101,38 @@
             <TextView
                 android:textAlignment="center"
                 android:text="@string/gasto"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:textAlignment="center"
                 android:text="@string/sobra"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:textAlignment="center"
                 android:text="@string/balance"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
         </TableRow>
         <TableRow>
             <TextView
                 android:id="@+id/lbl_diario_gasto"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:id="@+id/lbl_diario_sobra"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:id="@+id/lbl_diario_balance"
                 android:textAlignment="center"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
         </TableRow>
     </TableLayout>
 
@@ -127,28 +144,34 @@
         android:layout_marginTop="16sp"
         android:layout_marginHorizontal="44sp"
         android:text="@string/detalles_hoy"
-        android:textSize="28sp"/>
+        android:textSize="28sp"
+        android:textColor="@color/colorPrimary"/>
     <TableLayout android:stretchColumns="*">
         <TableRow>
             <TextView
                 android:textAlignment="center"
                 android:text="@string/hora"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:textAlignment="center"
                 android:text="@string/descripcion"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
             <TextView
                 android:textAlignment="center"
                 android:text="@string/gasto"
-                android:textSize="18sp"/>
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/softgray"/>
         </TableRow>
     </TableLayout>
     <TableLayout
         android:id="@+id/table_list_detalles_diarios"
         android:layout_width="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16sp"
         android:layout_marginHorizontal="44sp"
         android:stretchColumns="*">
     </TableLayout>
