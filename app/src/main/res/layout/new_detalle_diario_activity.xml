@@ -69,7 +69,9 @@
             android:text="@string/new_detalle_diario_aceptar"
             android:layout_marginHorizontal="44sp"
             android:textAlignment="center"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimary"
+            android:shadowColor="@color/black" />
     </TableLayout>
 
     <!-- Tabla con info del diario -->

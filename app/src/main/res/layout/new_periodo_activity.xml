@@ -72,7 +72,9 @@
             android:layout_marginHorizontal="44sp"
             android:textAlignment="center"
             android:layout_marginTop="16sp"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimary"
+            android:shadowColor="@color/black"/>
     </TableLayout>
 
 </TableLayout>
