@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,17 +17,17 @@ import java.util.Date;
  * Lleva un nombre descriptivo para el gasto, y su monto.
  * @author Gonza
  * */
-@Entity(primaryKeys = {"diarioId", "detalleDiarioId"})
+@Entity
 public class DetalleDiario {
 
     @NonNull
     private Date diarioId = new Date();
-    @NonNull
-    private Long detalleDiarioId = 0L;
+    @PrimaryKey(autoGenerate = true)
+    private long detalleDiarioId;
     @ColumnInfo(name = "descripcion")
     private String descripcion;
     @ColumnInfo(name = "gasto")
-    private Long gasto;
+    private long gasto;
     @ColumnInfo(name = "hora")
     private Date hora;
     @SuppressLint("SimpleDateFormat")
@@ -35,12 +36,24 @@ public class DetalleDiario {
 
     public DetalleDiario() {}
 
-    public DetalleDiario(@NonNull Date diarioId, @NonNull Long detalleDiarioId, String descripcion, Long gasto, Date hora) {
+    public DetalleDiario(@NonNull Date diarioId, long detalleDiarioId, String descripcion, long gasto, Date hora) {
         this.diarioId = diarioId;
         this.detalleDiarioId = detalleDiarioId;
         this.descripcion = descripcion;
         this.gasto = gasto;
         this.hora = hora;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleDiario{" +
+                "diarioId=" + diarioId +
+                ", detalleDiarioId=" + detalleDiarioId +
+                ", descripcion='" + descripcion + '\'' +
+                ", gasto=" + gasto +
+                ", hora=" + hora +
+                ", formato=" + formato +
+                '}';
     }
 
     /*Getters & Setters*/
@@ -67,8 +80,7 @@ public class DetalleDiario {
      * Devuelve parte de la clave primaria compuesta (diarioId, detalleDiarioId).
      * La cual pertenece al id único entre sus hermanos (DetalleDiario.detalleDiarioId).
      * */
-    @NonNull
-    public Long getDetalleDiarioId() {
+    public long getDetalleDiarioId() {
         return detalleDiarioId;
     }
 
@@ -76,7 +88,7 @@ public class DetalleDiario {
      * Setea parte de la clave primaria compuesta (diarioId, detalleDiarioId).
      * La cual pertenece al id único entre sus hermanos (DetalleDiario.detalleDiarioId).
      * */
-    public void setDetalleDiarioId(@NonNull Long detalleDiarioId) {
+    public void setDetalleDiarioId(long detalleDiarioId) {
         this.detalleDiarioId = detalleDiarioId;
     }
 
@@ -97,14 +109,14 @@ public class DetalleDiario {
     /**
      * Devuelve el gasto de este detalle.
      * */
-    public Long getGasto() {
+    public long getGasto() {
         return gasto;
     }
 
     /**
      * Setea el gasto de este detalle.
      * */
-    public void setGasto(Long gasto) {
+    public void setGasto(long gasto) {
         this.gasto = gasto;
     }
 

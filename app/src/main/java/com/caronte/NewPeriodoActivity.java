@@ -117,6 +117,7 @@ public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPe
 
     /************************************ Interacción con XML ************************************/
     private void btnNewPeriodoClick() { //Clickea el botón para crear un nuevo período
+        lblExceptions.setText(null);
         String hasta = txtPeriodoHasta.getText().toString();
         String balanceInicial = txtPeriodoBalanceInicial.getText().toString();
         try {

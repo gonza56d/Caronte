@@ -20,23 +20,33 @@ public class Diario {
     @PrimaryKey
     private Date diarioId;
     @ColumnInfo(name = "gasto")
-    private Long gasto;
+    private long gasto;
     @ColumnInfo(name = "sobra")
-    private Long sobra;
+    private long sobra;
     @ColumnInfo(name = "balance")
-    private Long balance;
+    private long balance;
     @Ignore
     private List<DetalleDiario> detalles;
 
     public Diario() {}
 
-    public Diario(Date diarioId, Long gasto, Long sobra, Long balance) {
+    public Diario(Date diarioId, long gasto, long sobra, long balance) {
         this.diarioId = diarioId;
         this.gasto = gasto;
         this.sobra = sobra;
         this.balance = balance;
     }
 
+    @Override
+    public String toString() {
+        return "Diario{" +
+                "diarioId=" + diarioId +
+                ", gasto=" + gasto +
+                ", sobra=" + sobra +
+                ", balance=" + balance +
+                ", detalles=" + detalles +
+                '}';
+    }
     /*Getters & Setters*/
     /**
      * Devuelve la clave primaria, que es la fecha a la que pertenece el único diario para tal fecha.
@@ -55,14 +65,14 @@ public class Diario {
     /**
      * Devuelve el gasto total diario producido.
      * */
-    public Long getGasto() {
+    public long getGasto() {
         return gasto;
     }
 
     /**
      * Setea el gasto total diario producido.
      * */
-    public void setGasto(Long gasto) {
+    public void setGasto(long gasto) {
         this.gasto = gasto;
     }
 
@@ -70,7 +80,7 @@ public class Diario {
      * Devuelve la sobra del día, que es el monto disponible diario del período, menos el gasto del día.
      * (Periodo.disponibleDiario - Diario.gasto)
      * */
-    public Long getSobra() {
+    public long getSobra() {
         return sobra;
     }
 
@@ -78,21 +88,21 @@ public class Diario {
      * Setea la sobra del día, que es el monto disponible diario del período, menos el gasto del día.
      * (Periodo.disponibleDiario - Diario.gasto)
      * */
-    public void setSobra(Long sobra) {
+    public void setSobra(long sobra) {
         this.sobra = sobra;
     }
 
     /**
      * Devuelve suma de sobras de todos los diarios anteriores hasta la fecha de este diario.
      * */
-    public Long getBalance() {
+    public long getBalance() {
         return balance;
     }
 
     /**
      * Setea suma de sobras de todos los diarios anteriores hasta la fecha de este diario.
      * */
-    public void setBalance(Long balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 

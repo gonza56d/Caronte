@@ -41,6 +41,7 @@ public class CreatePeriodo extends AsyncTask<Void, Void, Periodo> {
     @Override
     protected Periodo doInBackground(Void... voids) {
         db.periodoDao().insertAll(periodo);
+        System.out.println("INSERT: " + periodo);
         return periodo;
     }
 
@@ -69,9 +70,11 @@ public class CreatePeriodo extends AsyncTask<Void, Void, Periodo> {
             long balanceInicial = Long.parseLong(sBalanceInicial);
             String hoy = formato.format(new Date());
             periodo = new Periodo();
-            periodo.setDesde(formato.parse(hoy));
-            periodo.setHasta(formato.parse(hasta));
+            periodo.setDesde(Utils.getToday());
+            periodo.setHasta(Utils.getDate(formato.parse(hasta)));
             periodo.setBalanceInicial(balanceInicial);
+            periodo.setBalance(0);
+            periodo.setSaldoRestante(balanceInicial);
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }

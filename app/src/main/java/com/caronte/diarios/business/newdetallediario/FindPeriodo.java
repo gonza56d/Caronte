@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.caronte.NewPeriodoActivity;
+import com.caronte.Utils;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
 
@@ -31,11 +32,12 @@ public class FindPeriodo extends AsyncTask<Void, Void, Periodo> {
 
     @Override
     protected Periodo doInBackground(Void... voids) {
-        return db.periodoDao().getPeriodo(new Date());
+        return db.periodoDao().getPeriodo(Utils.getToday());
     }
 
     @Override
     protected void onPostExecute(Periodo periodo) {
+        System.out.println("SELECT: " + periodo);
         Activity activity = weakActivity.get();
         if (activity == null) {
             return;
@@ -44,8 +46,11 @@ public class FindPeriodo extends AsyncTask<Void, Void, Periodo> {
             Intent intent = new Intent(activity, NewPeriodoActivity.class);
             activity.startActivity(intent);
         } else {
+            if (periodo.getBalance() == 0) {
+                periodo.setBalance(periodo.getBalanceInicial());
+            }
             llamador.setPeriodo(periodo);
-            llamador.findDiario();
+            llamador.findDiario(true);
         }
     }
 }

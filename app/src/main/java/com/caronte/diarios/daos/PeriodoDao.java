@@ -3,6 +3,7 @@ package com.caronte.diarios.daos;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.caronte.diarios.entities.Periodo;
 

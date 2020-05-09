@@ -3,11 +3,15 @@ package com.caronte.diarios.business.newdetallediario;
 import android.app.Activity;
 import android.os.AsyncTask;
 
+import com.caronte.Utils;
+import com.caronte.diarios.entities.DetalleDiario;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class CreateDiario extends AsyncTask<Void, Void, Diario> {
 
@@ -26,7 +30,33 @@ public class CreateDiario extends AsyncTask<Void, Void, Diario> {
 
     @Override
     protected Diario doInBackground(Void... voids) {
-        return null;
+        Diario diario = buildDiario();
+        db.diarioDao().insertAll(diario);
+        System.out.println("INSERT: " + diario);
+        return diario;
+    }
+
+    @Override
+    protected void onPostExecute(Diario diario) {
+        Activity activity = weakActivity.get();
+        if (activity == null) {
+            return;
+        }
+        if (diario != null) {
+            llamador.setDiario(diario);
+        } else {
+            llamador.raiseException("Error inesperado.");
+        }
+    }
+
+    private Diario buildDiario() {
+        Diario diario = new Diario();
+        diario.setDiarioId(Utils.getToday());
+        diario.setGasto(0L);
+        diario.setSobra(periodo.getDisponibleDiario());
+        diario.setBalance(periodo.getDisponibleDiario() - periodo.getSaldoRestante() / Utils.contarDias(new Date(), periodo.getHasta()));
+        diario.setDetalles(new ArrayList<DetalleDiario>());
+        return diario;
     }
 
 }

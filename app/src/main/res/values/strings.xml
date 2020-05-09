@@ -1,18 +1,22 @@
 <resources>
     <string name="app_name">Caronte</string>
     <!-- new_detalle_diario_activity -->
-    <string name="new_detalle_diario">Nuevo Gasto:</string>
+    <string name="new_detalle_diario">Nuevo Gasto</string>
     <string name="new_detalle_diario_descripcion">Descripción:</string>
     <string name="new_detalle_diario_gasto">Monto:</string>
     <string name="new_detalle_diario_aceptar">Agregar</string>
     <!-- new_periodo_activity -->
     <string name="new_periodo_aviso">No encontramos un período activo!</string>
     <string name="new_periodo">Nuevo Período:</string>
-    <string name="new_periodo_hasta">Finaliza el:</string>
-    <string name="new_periodo_balance_inicial">Balance inicial:</string>
+    <string name="new_periodo_hasta">Finaliza el</string>
+    <string name="new_periodo_balance_inicial">Balance inicial</string>
     <string name="new_periodo_aceptar">Comenzar</string>
     <!-- tabla de detalles de gastos -->
+    <string name="detalles_hoy">Detalles de hoy</string>
     <string name="hora">Hora</string>
     <string name="descripcion">Descripción</string>
     <string name="gasto">Gasto</string>
+    <string name="sobra">Sobra</string>
+    <string name="balance">Balance</string>
+    <string name="diario">Diario</string>
 </resources>

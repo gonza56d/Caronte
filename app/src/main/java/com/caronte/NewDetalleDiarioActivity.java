@@ -1,6 +1,7 @@
 package com.caronte;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.caronte.diarios.business.newdetallediario.CreateDetalleDiario;
 import com.caronte.diarios.business.newdetallediario.CreateDiario;
+import com.caronte.diarios.business.newdetallediario.FindDetallesDiarios;
 import com.caronte.diarios.business.newdetallediario.FindDiario;
 import com.caronte.diarios.business.newdetallediario.FindPeriodo;
 import com.caronte.diarios.business.newdetallediario.IntBusNewDetalleDiario;
@@ -20,6 +23,8 @@ import com.caronte.diarios.entities.DetalleDiario;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
+
+import java.util.List;
 
 /**
  * Actividad que contiene la creación de un nuevo detalle diario, más la lista de detalles del día,
@@ -35,7 +40,12 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
     private Button btnNewDetalleDiario;
     private Periodo periodo;
     private Diario diario;
+    private Diario diarioAyer;
     private TableLayout tableListDetallesDiarios;
+    private TextView lblExceptions;
+    private TextView lblDiarioGasto;
+    private TextView lblDiarioSobra;
+    private TextView lblDiarioBalance;
 
     /******************************** Implementación de actividad ********************************/
     @Override
@@ -67,8 +77,20 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
      * nuevo diario y lo persiste.
      * */
     @Override
-    public void findDiario() {
-        new FindDiario(this, this, db);
+    public void findDiario(boolean ayer) {
+        new FindDiario(this, this, db, ayer);
+    }
+
+    @Override
+    public void findDetallesDiarios() {
+        new FindDetallesDiarios(this, this, db);
+    }
+
+    @Override
+    public void setDetallesDiarios(List<DetalleDiario> listDetallesDiarios) {
+        diario.setDetalles(listDetallesDiarios);
+        updateTablaDiario();
+        updateTablaDetalles();
     }
 
     /**
@@ -86,6 +108,22 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         initTxtDetalleDiarioGasto();
         initBtnNewDetalleDiario();
         initTableListDetallesDiarios();
+        initLblExceptions();
+        initLblDiarioGasto();
+        initLblDiarioSobra();
+        initLblDiarioBalance();
+    }
+
+    private void initLblDiarioGasto() {
+        lblDiarioGasto = findViewById(R.id.lbl_diario_gasto);
+    }
+
+    private void initLblDiarioSobra() {
+        lblDiarioSobra = findViewById(R.id.lbl_diario_sobra);
+    }
+
+    private void initLblDiarioBalance() {
+        lblDiarioBalance = findViewById(R.id.lbl_diario_balance);
     }
 
     private void initTxtDetalleDiarioDescripcion() {
@@ -109,27 +147,61 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         tableListDetallesDiarios = findViewById(R.id.table_list_detalles_diarios);
     }
 
-    /************************************ Interacción con XML ************************************/
-    private void btnNewDetalleDiarioClick() {
-        String descripcion = txtDetalleDiarioDescripcion.getText().toString();
-        String gasto = txtDetalleDiarioGasto.getText().toString();
-        //TODO persistir
+    private void initLblExceptions() {
+        lblExceptions = findViewById(R.id.lbl_exception);
     }
 
-    /**
-     * Método llamado desde el bridge luego de haber insertado un detalle, para agregar el mismo
-     * a la tabla.
-     * */
-    //TODO
-    public void addDetalleDiarioToTable() {
+    /************************************ Interacción con XML ************************************/
+    private void btnNewDetalleDiarioClick() {
+        lblExceptions.setText(null);
+        String descripcion = txtDetalleDiarioDescripcion.getText().toString();
+        String gasto = txtDetalleDiarioGasto.getText().toString();
+        new CreateDetalleDiario(this, this, db, periodo, diario, descripcion, gasto);
+    }
+
+    @Override
+    public void raiseException(String mensaje) {
+        clearFields();
+        lblExceptions.setText(mensaje);
+    }
+
+    private void clearFields() {
+        txtDetalleDiarioDescripcion.setText(null);
+        txtDetalleDiarioDescripcion.clearFocus();
+        txtDetalleDiarioGasto.setText(null);
+        txtDetalleDiarioGasto.clearFocus();
+        btnNewDetalleDiario.clearFocus();
+    }
+
+    @Override
+    public void updateMovimiento(Periodo periodo, Diario diario) {
+        this.periodo = periodo;
+        this.diario = diario;
+        updateTablaDiario();
+        updateTablaDetalles();
+        clearFields();
+    }
+
+    public void updateTablaDiario() {
+        lblDiarioGasto.setText("$ " + String.valueOf(diario.getGasto()));
+        lblDiarioSobra.setText("$ " + String.valueOf(diario.getSobra()));
+        lblDiarioBalance.setText("$ " + String.valueOf(diario.getBalance()));
+    }
+
+    public void updateTablaDetalles() {
+        tableListDetallesDiarios.removeAllViews();
         for (DetalleDiario detalleDiario : diario.getDetalles()) {
             TableRow row = new TableRow(this);
             TextView txtHora = new TextView(this);
             TextView txtDescripcion = new TextView(this);
             TextView txtGasto = new TextView(this);
+            txtGasto.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            txtGasto.setText("$ " + String.valueOf(detalleDiario.getGasto()));
+            txtGasto.setTextSize(18);
             txtHora.setText(detalleDiario.getHoraFormateada());
+            txtHora.setTextSize(18);
             txtDescripcion.setText(detalleDiario.getDescripcion());
-            txtGasto.setText("$ " + detalleDiario.getGasto().toString());
+            txtDescripcion.setTextSize(18);
             row.addView(txtHora);
             row.addView(txtDescripcion);
             row.addView(txtGasto);
@@ -146,6 +218,15 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
     @Override
     public void setDiario(Diario diario) {
         this.diario = diario;
+        if (diarioAyer != null)
+        this.diario.setBalance(diario.getBalance()+diarioAyer.getBalance());
+        updateTablaDiario();
+        findDetallesDiarios();
+    }
+
+    @Override
+    public void setDiarioAyer(Diario diario) {
+        this.diarioAyer = diario;
     }
 
 }

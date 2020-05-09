@@ -7,6 +7,7 @@ import androidx.room.TypeConverters;
 import com.caronte.diarios.daos.DetalleDiarioDao;
 import com.caronte.diarios.daos.DiarioDao;
 import com.caronte.diarios.daos.PeriodoDao;
+import com.caronte.diarios.daos.Transactional;
 import com.caronte.diarios.entities.DetalleDiario;
 import com.caronte.diarios.entities.Diario;
 import com.caronte.diarios.entities.Periodo;
@@ -17,4 +18,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PeriodoDao periodoDao();
     public abstract DiarioDao diarioDao();
     public abstract DetalleDiarioDao detalleDiarioDao();
+    public abstract Transactional getTransactional();
 }
