@@ -2,6 +2,7 @@ package com.caronte;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -57,6 +58,15 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         setContentView(R.layout.new_detalle_diario_activity);
         context = this;
         initXml();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 
     @Override
@@ -156,10 +166,10 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
 
     /************************************ Interacción con XML ************************************/
     private void btnNewDetalleDiarioClick() {
+        Utils.hideSoftKeyboard(this);
         lblExceptions.setText(null);
         String descripcion = txtDetalleDiarioDescripcion.getText().toString();
         String gasto = txtDetalleDiarioGasto.getText().toString();
-        Utils.hideSoftKeyboard(this);
         new CreateDetalleDiario(this, this, db, periodo, diario, descripcion, gasto);
     }
 

@@ -2,9 +2,12 @@
 <resources>
     <color name="black">#000000</color>
     <color name="ultragray">#323232</color>
+    <color name="midgray">#787878</color>
     <color name="softgray">#CDCDCD</color>
-    <color name="colorPrimary">#32A800</color>
-    <color name="colorPrimaryDark">#046C00</color>
-    <color name="colorAccent">#38FF00</color>
+    <color name="primary_gray">#4DAFA8</color>
+    <color name="colorPrimary">#00D8C7</color>
+    <color name="colorPrimaryDark">#009387</color>
+    <color name="colorPrimaryVeryDark">#006A62</color>
+    <color name="colorAccent">#00FFEA</color>
     <color name="colorRed">#DA0000</color>
 </resources>

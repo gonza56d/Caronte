@@ -34,11 +34,13 @@ public class Utils {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
-                Activity.INPUT_METHOD_SERVICE);
-        assert inputMethodManager != null;
-        inputMethodManager.hideSoftInputFromWindow(
-                Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+        if (activity != null && activity.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
+                    Activity.INPUT_METHOD_SERVICE);
+            assert inputMethodManager != null;
+            inputMethodManager.hideSoftInputFromWindow(
+                    Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
+        }
     }
 
     public static Date getToday() {
