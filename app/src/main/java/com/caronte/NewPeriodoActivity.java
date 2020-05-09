@@ -140,8 +140,6 @@ public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPe
     @Override
     public void createPeriodoException(String exceptionMessage) {
         lblExceptions.setText(exceptionMessage);
-        lblExceptions.setVisibility(View.VISIBLE);
-        clearFields();
     }
 
 }

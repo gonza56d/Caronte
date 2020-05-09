@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="44sp"
             android:digits="0123456789"
+            android:maxLength="6"
             android:inputType="phone"
             android:textAlignment="center"
             android:textSize="22sp"

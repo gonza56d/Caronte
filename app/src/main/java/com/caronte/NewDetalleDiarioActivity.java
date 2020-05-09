@@ -176,7 +176,6 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
 
     @Override
     public void raiseException(String mensaje) {
-        clearFields();
         lblExceptions.setText(mensaje);
     }
 
