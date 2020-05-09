@@ -27,8 +27,6 @@ import com.caronte.diarios.entities.Periodo;
 import com.caronte.room.AppDatabase;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * Actividad que contiene la creación de un nuevo detalle diario, más la lista de detalles del día,
@@ -112,7 +110,7 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
      * */
     @Override
     public void createDiario() {
-        new CreateDiario(this, this, db, periodo);
+        new CreateDiario(this, this, db, periodo, diarioAyer);
     }
 
     /*********************************** Inicialización de XML ***********************************/
@@ -201,8 +199,16 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         lblDiarioBalance.setTextColor(getResources().getColor(R.color.softgray));
         lblDiarioSobra.setText("$ " + String.valueOf(diario.getSobra()));
         lblDiarioSobra.setTextColor(getResources().getColor(R.color.softgray));
+        if (diario.getSobra() < 0) {
+            lblDiarioSobra.setTextColor(getResources().getColor(R.color.colorRed));
+        }
         lblDiarioBalance.setText("$ " + String.valueOf(diario.getBalance()));
         lblDiarioBalance.setTextColor(getResources().getColor(R.color.softgray));
+        if (diario.getBalance() > 0) {
+            lblDiarioBalance.setTextColor(getResources().getColor(R.color.colorGreen));
+        } else if (diario.getBalance() < 0) {
+            lblDiarioBalance.setTextColor(getResources().getColor(R.color.colorRed));
+        }
     }
 
     public void updateTablaDetalles() {
@@ -238,17 +244,6 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
     @Override
     public void setDiario(final Diario diario) {
         this.diario = diario;
-        if (diarioAyer != null && !diario.isSaldoFijado()) {
-            this.diario.setBalance(diario.getBalance() + diarioAyer.getBalance());
-        }
-        this.diario.setSaldoFijado(true);
-        Executor myExecutor = Executors.newSingleThreadExecutor();
-        myExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                db.diarioDao().update(diario);
-            }
-        });
         updateTablaDiario();
         findDetallesDiarios();
     }

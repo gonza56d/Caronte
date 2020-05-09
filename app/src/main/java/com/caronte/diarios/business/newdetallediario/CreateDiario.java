@@ -19,12 +19,15 @@ public class CreateDiario extends AsyncTask<Void, Void, Diario> {
     private IntBusNewDetalleDiario llamador;
     private AppDatabase db;
     private Periodo periodo;
+    private Diario diarioAyer;
 
-    public CreateDiario(Activity activity, IntBusNewDetalleDiario llamador, AppDatabase db, Periodo periodo) {
+    public CreateDiario(Activity activity, IntBusNewDetalleDiario llamador, AppDatabase db,
+                        Periodo periodo, Diario diarioAyer) {
         weakActivity = new WeakReference<>(activity);
         this.llamador = llamador;
         this.db = db;
         this.periodo = periodo;
+        this.diarioAyer = diarioAyer;
         executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -56,6 +59,9 @@ public class CreateDiario extends AsyncTask<Void, Void, Diario> {
         diario.setSobra(periodo.getDisponibleDiario());
         diario.setBalance(periodo.getDisponibleDiario() - periodo.getSaldoRestante() / Utils.contarDias(new Date(), periodo.getHasta()));
         diario.setDetalles(new ArrayList<DetalleDiario>());
+        if (diarioAyer != null) {
+            diario.setBalance(diarioAyer.getBalance()+diarioAyer.getSobra());
+        }
         return diario;
     }
 
