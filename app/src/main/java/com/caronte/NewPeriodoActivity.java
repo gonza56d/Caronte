@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.caronte.diarios.business.newperiodo.CreatePeriodo;
+import com.caronte.diarios.business.newperiodo.DeleteOldPeriodos;
 import com.caronte.diarios.business.newperiodo.IntBusNewPeriodo;
 import com.caronte.room.AppDatabase;
 
@@ -127,6 +128,16 @@ public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPe
     /************************************ Interacción con XML ************************************/
     private void btnNewPeriodoClick() { //Clickea el botón para crear un nuevo período
         lblExceptions.setText(null);
+        new DeleteOldPeriodos(this, this, db);
+    }
+
+    @Override
+    public void createPeriodoException(String exceptionMessage) {
+        lblExceptions.setText(exceptionMessage);
+    }
+
+    @Override
+    public void createPeriodo() {
         String hasta = txtPeriodoHasta.getText().toString();
         String balanceInicial = txtPeriodoBalanceInicial.getText().toString();
         Utils.hideSoftKeyboard(this);
@@ -135,11 +146,6 @@ public class NewPeriodoActivity extends AppCompatActivity implements IntBusNewPe
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void createPeriodoException(String exceptionMessage) {
-        lblExceptions.setText(exceptionMessage);
     }
 
 }

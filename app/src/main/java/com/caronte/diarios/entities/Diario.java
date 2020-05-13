@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class Diario {
     private long balance;
     @Ignore
     private List<DetalleDiario> detalles;
+    @Ignore
+    private final SimpleDateFormat formato = new SimpleDateFormat("dd/MM");
 
     public Diario() {}
 
@@ -53,6 +56,13 @@ public class Diario {
      * */
     public Date getDiarioId() {
         return diarioId;
+    }
+
+    public String getFechaFormateada() {
+        if (diarioId != null) {
+            return formato.format(diarioId);
+        }
+        return null;
     }
 
     /**

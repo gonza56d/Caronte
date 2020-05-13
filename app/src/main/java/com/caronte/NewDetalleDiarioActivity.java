@@ -19,6 +19,7 @@ import com.caronte.diarios.business.newdetallediario.CreateDetalleDiario;
 import com.caronte.diarios.business.newdetallediario.CreateDiario;
 import com.caronte.diarios.business.newdetallediario.FindDetallesDiarios;
 import com.caronte.diarios.business.newdetallediario.FindDiario;
+import com.caronte.diarios.business.newdetallediario.FindDiariosAnteriores;
 import com.caronte.diarios.business.newdetallediario.FindPeriodo;
 import com.caronte.diarios.business.newdetallediario.IntBusNewDetalleDiario;
 import com.caronte.diarios.entities.DetalleDiario;
@@ -43,6 +44,8 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
     private Periodo periodo;
     private Diario diario;
     private Diario diarioAyer;
+    private List<Diario> diariosAnteriores;
+    private TableLayout tableListDiariosAnteriores;
     private TableLayout tableListDetallesDiarios;
     private TextView lblExceptions;
     private TextView lblDiarioGasto;
@@ -104,6 +107,17 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         updateTablaDetalles();
     }
 
+    @Override
+    public void findDiariosAnteriores() {
+        new FindDiariosAnteriores(this, this, db, periodo);
+    }
+
+    @Override
+    public void setDiariosAnteriores(List<Diario> diariosAnteriores) {
+        this.diariosAnteriores = diariosAnteriores;
+        updateTablaDiariosAnteriores();
+    }
+
     /**
      * Método llamado desde el business (FindDiario) en caso de no haberse encontrado un Diario,
      * para así crear uno.
@@ -119,6 +133,7 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         initTxtDetalleDiarioGasto();
         initBtnNewDetalleDiario();
         initTableListDetallesDiarios();
+        initTableListDiariosAnteriores();
         initLblExceptions();
         initLblDiarioGasto();
         initLblDiarioSobra();
@@ -156,6 +171,10 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
 
     private void initTableListDetallesDiarios() {
         tableListDetallesDiarios = findViewById(R.id.table_list_detalles_diarios);
+    }
+
+    private void initTableListDiariosAnteriores() {
+        tableListDiariosAnteriores = findViewById(R.id.table_list_diarios_anteriores);
     }
 
     private void initLblExceptions() {
@@ -211,6 +230,41 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
         }
     }
 
+    private void updateTablaDiariosAnteriores() {
+        tableListDiariosAnteriores.removeAllViews();
+        if (diariosAnteriores != null && diariosAnteriores.size() > 0) {
+            for (Diario diarioAnterior : diariosAnteriores) {
+                TableRow row = new TableRow(this);
+                TextView txtFecha = new TextView(this);
+                TextView txtGasto = new TextView(this);
+                TextView txtSobra = new TextView(this);
+                TextView txtBalance = new TextView(this);
+                txtFecha.setTextColor(getResources().getColor(R.color.softgray));
+                txtFecha.setTextSize(18);
+                txtFecha.setText(diarioAnterior.getFechaFormateada());
+                txtGasto.setTextColor(getResources().getColor(R.color.softgray));
+                txtGasto.setTextSize(18);
+                txtGasto.setText("$ " + String.valueOf(diarioAnterior.getGasto()));
+                txtSobra.setTextColor(getResources().getColor(R.color.softgray));
+                txtSobra.setTextSize(18);
+                txtSobra.setText("$ " + String.valueOf(diarioAnterior.getSobra()));
+                if (diarioAnterior.getSobra() > 0) {
+                    txtSobra.setTextColor(getResources().getColor(R.color.colorGreen));
+                } else if (diarioAnterior.getSobra() < 0) {
+                    txtSobra.setTextColor(getResources().getColor(R.color.colorRed));
+                }
+                txtBalance.setTextColor(getResources().getColor(R.color.softgray));
+                txtBalance.setTextSize(18);
+                txtBalance.setText("$ " + String.valueOf(diarioAnterior.getBalance()));
+                row.addView(txtFecha);
+                row.addView(txtGasto);
+                row.addView(txtSobra);
+                row.addView(txtBalance);
+                tableListDiariosAnteriores.addView(row);
+            }
+        }
+    }
+
     public void updateTablaDetalles() {
         tableListDetallesDiarios.removeAllViews();
         for (DetalleDiario detalleDiario : diario.getDetalles()) {
@@ -226,8 +280,10 @@ public class NewDetalleDiarioActivity extends AppCompatActivity implements IntBu
             txtGasto.setTextSize(18);
             txtHora.setText(detalleDiario.getHoraFormateada());
             txtHora.setTextSize(18);
+            txtHora.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             txtDescripcion.setText(detalleDiario.getDescripcion());
             txtDescripcion.setTextSize(18);
+            txtDescripcion.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             row.addView(txtHora);
             row.addView(txtDescripcion);
             row.addView(txtGasto);

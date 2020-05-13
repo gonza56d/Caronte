@@ -8,7 +8,6 @@ import com.caronte.diarios.entities.Diario;
 import com.caronte.room.AppDatabase;
 
 import java.lang.ref.WeakReference;
-import java.util.Date;
 
 public class FindDiario extends AsyncTask<Void, Void, Diario> {
 

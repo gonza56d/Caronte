@@ -18,6 +18,9 @@ public interface IntBusNewDetalleDiario {
     //Find Detalle Diario
     void findDetallesDiarios();
     void setDetallesDiarios(List<DetalleDiario> listDetallesDiarios);
+    //Diarios anteriores
+    void findDiariosAnteriores();
+    void setDiariosAnteriores(List<Diario> diariosAnteriores);
     //Excepciones
     void raiseException(String mensaje);
     //Update movimiento

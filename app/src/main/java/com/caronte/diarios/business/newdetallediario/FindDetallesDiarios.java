@@ -9,7 +9,6 @@ import com.caronte.room.AppDatabase;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class FindDetallesDiarios extends AsyncTask<Void, Void, List<DetalleDiario>> {
@@ -42,6 +41,7 @@ public class FindDetallesDiarios extends AsyncTask<Void, Void, List<DetalleDiari
         } else {
             llamador.setDetallesDiarios(new ArrayList<DetalleDiario>());
         }
+        llamador.findDiariosAnteriores();
     }
 
 }

@@ -8,6 +8,7 @@ import androidx.room.Update;
 import com.caronte.diarios.entities.Diario;
 
 import java.util.Date;
+import java.util.List;
 
 @Dao
 public interface DiarioDao {
@@ -19,6 +20,9 @@ public interface DiarioDao {
 
     @Query("SELECT * FROM diario where diarioId = :hoy")
     Diario getDiario(Date hoy);
+
+    @Query("SELECT * FROM diario where diarioId < :hoy and diarioId >= :inicioPeriodo")
+    List<Diario> getDiariosAnteriores(Date inicioPeriodo, Date hoy);
 
     @Query("DELETE FROM diario")
     void deleteAll();
