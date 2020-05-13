@@ -23,6 +23,8 @@ public class DeleteOldPeriodos extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         db.periodoDao().deleteAll();
+        db.diarioDao().deleteAll();
+        db.detalleDiarioDao().deleteAll();
         return null;
     }
 
