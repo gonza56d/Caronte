@@ -21,6 +21,9 @@ public interface DiarioDao {
     @Query("SELECT * FROM diario where diarioId = :hoy")
     Diario getDiario(Date hoy);
 
+    @Query("SELECT * FROM diario WHERE diarioId < :hoy ORDER BY diarioId DESC limit 1")
+    Diario getLastDiario(Date hoy);
+
     @Query("SELECT * FROM diario where diarioId < :hoy and diarioId >= :inicioPeriodo")
     List<Diario> getDiariosAnteriores(Date inicioPeriodo, Date hoy);
 

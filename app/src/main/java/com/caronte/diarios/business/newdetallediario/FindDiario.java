@@ -33,13 +33,12 @@ public class FindDiario extends AsyncTask<Void, Void, Diario> {
         if (!ayer) {
             return db.diarioDao().getDiario(Utils.getToday());
         } else {
-            return db.diarioDao().getDiario(Utils.getAyer());
+            return db.diarioDao().getLastDiario(Utils.getToday());
         }
     }
 
     @Override
     protected void onPostExecute(Diario diario) {
-        System.out.println("SELECT: " + diario);
         Activity activity = weakActivity.get();
         if (activity == null) {
             return;
