@@ -85,6 +85,9 @@ public class CreatePeriodo extends AsyncTask<Void, Void, Periodo> {
      * Valida que la fecha ingresada para el nuevo período no sea anterior ni igual a la fecha actual.
      * */
     private void validarFecha(String hasta) throws BusinessException, ParseException {
+        if (!Utils.hasData(hasta)) {
+            throw new BusinessException("Debe ingresar fecha.");
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         boolean fechaInvalida = Objects.requireNonNull(formato.parse(hasta)).getTime() <= new Date().getTime();
         if (fechaInvalida) {
@@ -97,7 +100,7 @@ public class CreatePeriodo extends AsyncTask<Void, Void, Periodo> {
      * */
     private void validarBalanceInicial(String balanceInicial) throws BusinessException {
         if (Utils.isEmptyOrNull(balanceInicial) || Long.parseLong(balanceInicial) < 100) {
-            throw new BusinessException("Balance menor a $99.");
+            throw new BusinessException("Balance menor a $100.");
         }
     }
 
